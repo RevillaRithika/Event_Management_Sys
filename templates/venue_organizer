@@ -1,0 +1,80 @@
+<!-- venues.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Venues</h2>
+<a href="{{ url_for('create_venue') }}" class="btn btn-primary mb-3">Add Venue</a>
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr><th>Name</th><th>Location</th><th>Capacity</th></tr>
+    </thead>
+    <tbody>
+        {% for venue in venues %}
+        <tr>
+            <td>{{ venue.name }}</td>
+            <td>{{ venue.location }}</td>
+            <td>{{ venue.capacity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+<!-- create_venue.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Create Venue</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input class="form-control" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Location</label>
+        <input class="form-control" name="location" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Capacity</label>
+        <input type="number" class="form-control" name="capacity" required>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('venues') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
+
+<!-- organizers.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Organizers</h2>
+<a href="{{ url_for('create_organizer') }}" class="btn btn-primary mb-3">Add Organizer</a>
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr><th>Name</th><th>Contact Info</th></tr>
+    </thead>
+    <tbody>
+        {% for organizer in organizers %}
+        <tr>
+            <td>{{ organizer.name }}</td>
+            <td>{{ organizer.contact_info }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+<!-- create_organizer.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Create Organizer</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input class="form-control" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Contact Info</label>
+        <input class="form-control" name="contact_info" required>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('organizers') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

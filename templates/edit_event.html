@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Edit Event</h2>
+        <div class="card shadow-sm p-4">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Event Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ event.name }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" value="{{ event.date.strftime('%Y-%m-%d') }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="venue_id" class="form-label">Venue</label>
+                    <select class="form-select" id="venue_id" name="venue_id" required>
+                        {% for venue in venues %}
+                        <option value="{{ venue.venue_id }}" {% if venue.venue_id == event.venue_id %}selected{% endif %}>
+                            {{ venue.name }} - {{ venue.location }} ({{ venue.capacity }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="organizer_id" class="form-label">Organizer</label>
+                    <select class="form-select" id="organizer_id" name="organizer_id" required>
+                        {% for organizer in organizers %}
+                        <option value="{{ organizer.organizer_id }}" {% if organizer.organizer_id == event.organizer_id %}selected{% endif %}>
+                            {{ organizer.name }} ({{ organizer.contact_info }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-warning">Update Event</button>
+                    <a href="{{ url_for('events') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
