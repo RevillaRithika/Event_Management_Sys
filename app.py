@@ -21,9 +21,11 @@ def title_page():
 
 @app.route('/home')
 def index():
-    # Display event summary on the main homepage
     events = Event.query.all()
-    return render_template('index.html', events=events)
+    venues = Venue.query.all()
+    organizers = Organizer.query.all()
+    return render_template('index.html', events=events, venues=venues, organizers=organizers)
+
 
 
 # Event Routes
@@ -221,6 +223,28 @@ def delete_organizer(organizer_id):
     db.session.commit()
     flash('Organizer deleted successfully!')
     return redirect(url_for('organizers'))
+
+@app.route('/home/search')
+def search_index():
+    event_name = request.args.get('event_name')
+    venue_id = request.args.get('venue_id')
+    organizer_id = request.args.get('organizer_id')
+
+    query = Event.query
+
+    if event_name:
+        query = query.filter(Event.name.ilike(f"%{event_name}%"))
+    if venue_id:
+        query = query.filter_by(venue_id=venue_id)
+    if organizer_id:
+        query = query.filter_by(organizer_id=organizer_id)
+
+    events = query.all()
+    venues = Venue.query.all()
+    organizers = Organizer.query.all()
+
+    return render_template('index.html', events=events, venues=venues, organizers=organizers)
+
 
 # App Runner
 
