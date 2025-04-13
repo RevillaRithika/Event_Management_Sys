@@ -2,6 +2,38 @@
 
 {% block content %}
 
+<form method="GET" action="{{ url_for('search_index') }}" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label for="event_name" class="form-label">Search by Event Name</label>
+        <input type="text" class="form-control" id="event_name" name="event_name" placeholder="Enter event name">
+    </div>
+
+    <div class="col-md-3">
+        <label for="venue_id" class="form-label">Filter by Venue</label>
+        <select class="form-select" name="venue_id" id="venue_id">
+            <option value="">All Venues</option>
+            {% for venue in venues %}
+            <option value="{{ venue.venue_id }}">{{ venue.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label for="organizer_id" class="form-label">Filter by Organizer</label>
+        <select class="form-select" name="organizer_id" id="organizer_id">
+            <option value="">All Organizers</option>
+            {% for organizer in organizers %}
+            <option value="{{ organizer.organizer_id }}">{{ organizer.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary w-100 mt-2">Reset</a>
+    </div>
+</form>
+
 <div class="row">
     <div class="col-md-12">
         <h2 class="mb-4">Upcoming Events</h2>
