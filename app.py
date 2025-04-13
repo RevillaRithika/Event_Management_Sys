@@ -8,6 +8,10 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
+@app.route('/title')
+def title_page():
+    return render_template('title_page.html')
+
 @app.route('/')
 def index():
     events = Event.query.all()
@@ -151,6 +155,39 @@ def delete_venue(venue_id):
 def organizers():
     organizers = Organizer.query.all()
     return render_template('organizers.html', organizers=organizers)
+
+@app.route('/organizers/add', methods=['GET', 'POST'])
+def add_organizer():
+    if request.method == 'POST':
+        name = request.form['name']
+        contact_info = request.form['contact_info']
+
+        organizer = Organizer(name=name, contact_info=contact_info)
+        db.session.add(organizer)
+        db.session.commit()
+        flash('Organizer added successfully!', 'success')
+        return redirect(url_for('organizers'))
+
+    return render_template('add_organizer.html')
+
+@app.route('/organizers/<int:organizer_id>/edit', methods=['GET', 'POST'])
+def edit_organizer(organizer_id):
+    organizer = Organizer.query.get_or_404(organizer_id)
+    if request.method == 'POST':
+        organizer.name = request.form['name']
+        organizer.contact_info = request.form['contact_info']
+        db.session.commit()
+        flash('Organizer updated successfully!')
+        return redirect(url_for('organizers'))
+    return render_template('edit_organizer.html', organizer=organizer)
+
+@app.route('/organizers/<int:organizer_id>/delete', methods=['POST'])
+def delete_organizer(organizer_id):
+    organizer = Organizer.query.get_or_404(organizer_id)
+    db.session.delete(organizer)
+    db.session.commit()
+    flash('Organizer deleted successfully!')
+    return redirect(url_for('organizers'))
 
 if __name__ == '__main__':
     with app.app_context():

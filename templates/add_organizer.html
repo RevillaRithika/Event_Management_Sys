@@ -8,10 +8,10 @@
         <input type="text" class="form-control" name="name" required>
     </div>
     <div class="mb-3">
-        <label class="form-label">Contact Info</label>
+        <label class="form-label">Email</label>
         <input type="text" class="form-control" name="contact_info" required>
     </div>
     <button type="submit" class="btn btn-primary">Add Organizer</button>
-    <a href="{{ url_for('organizers_page) }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ url_for('organizers') }}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}
