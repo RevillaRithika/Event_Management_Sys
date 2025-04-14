@@ -188,6 +188,13 @@ def organizers():
     organizers = Organizer.query.all()
     return render_template('organizers.html', organizers=organizers)
 
+@app.route('/organizers/search')
+def search_organizers():
+    query_text = request.args.get('query')
+    organizers = Organizer.query.filter(Organizer.name.ilike(f"%{query_text}%")).all()
+    return render_template('organizers.html', organizers=organizers)
+
+
 @app.route('/organizers/add', methods=['GET', 'POST'])
 def add_organizer():
     # Create a new organizer

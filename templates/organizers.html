@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method="GET" action="{{ url_for('search_organizers') }}" class="row g-3 mb-4">
+    <div class="col-md-10">
+        <input type="text" class="form-control" name="query" placeholder="Search by organizer name">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
 <h2 class="mb-4">All Organizers</h2>
 <a href="{{ url_for('add_organizer') }}" class="btn btn-primary mb-3">Add Organizer</a>
 
