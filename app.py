@@ -21,20 +21,20 @@ def title_page():
 
 @app.route('/home')
 def index():
+    # Display event summary on the main homepage
     events = Event.query.all()
-    venues = Venue.query.all()
-    organizers = Organizer.query.all()
-    return render_template('index.html', events=events, venues=venues, organizers=organizers)
-
+    return render_template('index.html', events=events)
 
 
 # Event Routes
 
 @app.route('/events')
 def events():
-    # List all events
     events = Event.query.all()
-    return render_template('events_list.html', events=events)
+    venues = Venue.query.all()
+    organizers = Organizer.query.all()
+    return render_template('events_list.html', events=events, venues=venues, organizers=organizers)
+
 
 @app.route('/events/create', methods=['GET', 'POST'])
 def create_event():
@@ -224,8 +224,8 @@ def delete_organizer(organizer_id):
     flash('Organizer deleted successfully!')
     return redirect(url_for('organizers'))
 
-@app.route('/home/search')
-def search_index():
+@app.route('/events/search')
+def search_events():
     event_name = request.args.get('event_name')
     venue_id = request.args.get('venue_id')
     organizer_id = request.args.get('organizer_id')
@@ -243,7 +243,7 @@ def search_index():
     venues = Venue.query.all()
     organizers = Organizer.query.all()
 
-    return render_template('index.html', events=events, venues=venues, organizers=organizers)
+    return render_template('events_list.html', events=events, venues=venues, organizers=organizers)
 
 
 # App Runner
