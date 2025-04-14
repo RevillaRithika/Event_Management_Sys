@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method="GET" action="{{ url_for('search_venues') }}" class="row g-3 mb-4">
+    <div class="col-md-5">
+        <input type="text" class="form-control" name="name" placeholder="Search by venue name">
+    </div>
+    <div class="col-md-5">
+        <input type="text" class="form-control" name="location" placeholder="Search by location">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
 <h2 class="mb-4">All Venues</h2>
 <a href="{{ url_for('add_venue') }}" class="btn btn-primary mb-3">Add Venue</a>
 

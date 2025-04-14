@@ -139,6 +139,22 @@ def venues():
     venues = Venue.query.all()
     return render_template('venues.html', venues=venues)
 
+@app.route('/venues/search')
+def search_venues():
+    name = request.args.get('name')
+    location = request.args.get('location')
+
+    query = Venue.query
+
+    if name:
+        query = query.filter(Venue.name.ilike(f"%{name}%"))
+    if location:
+        query = query.filter(Venue.location.ilike(f"%{location}%"))
+
+    venues = query.all()
+    return render_template('venues.html', venues=venues)
+
+
 @app.route('/venues/add', methods=['GET', 'POST'])
 def add_venue():
     # Create a new venue
